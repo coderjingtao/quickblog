@@ -1,0 +1,69 @@
+﻿{% extends 'blog_base.html' %}
+{% load staticfiles %}
+
+{% block article %}
+	<!-- One article content start -->
+	<style>
+	</style>
+	<article class="blog-item">
+		<div class="img">
+			<img src="{% static 'img/img16.jpg' %}" alt="">
+		</div>
+		<!--div class="blog-text"-->
+		<div>
+			<p>{{ article.body | safe }}</p>
+			<div class="bottom-blog clear">
+				<div class="date">Date publication: {{ article.created_time }}</div>
+				<a href="{% url 'blog:detail' article.pk %}#comment-area" class="comment"><i class="fa fa-comment-o" aria-hidden="true"></i> {{ article.comment_set.count }} comments</a>
+			</div>
+		</div>
+	</article>
+	<!-- Comment form start -->
+	<form action="{% url 'comments:post_comment' article.pk %}" method="POST">
+		{% csrf_token %}
+		<div class="contact-form">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="input-block name-form">
+						{{ form.name }}
+						{{ form.name.errors }}
+					</div>
+					<div class="input-block phone-form">
+						{{ form.url }}
+						{{ form.url.errors }}
+					</div>
+					<div class="input-block email-form">
+						{{ form.email }}
+						{{ form.email.errors }}
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="input-block message-form">
+						{{ form.text }}
+						{{ form.text.errors }}
+					</div>
+				</div>
+				<div class="col-md-12">
+					<input type="submit" value="Comment">
+				</div>
+			</div>
+		</div>
+	</form>
+	<!-- comment list start -->
+	<section id="comment-area">
+		<h3>Comment List</h3>
+	{% for comment in comment_list %}
+	<article class="blog-item">
+			<div class="blog-text">
+				<h5>{{ comment.name }}</h5>
+				<p>{{ comment.text }}</p>
+				<div class="bottom-blog clear">
+					<div class="date">{{ comment.created_time }}</div>
+				</div>
+			</div>
+	</article>
+	{% empty %}
+			There is no any comment yet.
+	{% endfor %}
+	</section>
+{% endblock article %}	

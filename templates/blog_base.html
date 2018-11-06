@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load blog_tags %}
+
+{% block body %}
+		<!-- breadcrumbs-wrapper -->
+		<div class="breadcrumbs-wrapper">
+			<ul class="breadcrumbs">
+				<li><a href="#" class="home"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+				<li><a href="{% url 'blog:index' %}">Blog</a></li>
+			</ul>
+		</div>
+		<!-- breadcrumbs-wrapper -->
+		<section class="content-wrapper">
+			<div class="container">
+				<div class="title">
+					<h1>{{ title }}</h1>
+				</div>
+				<!-- blog-sidebar -->
+				<div class="row">
+					<!-- category-menu -->
+					<aside class="sidebar col-md-4">
+						<h4>Category menu</h4>
+						{% get_categories as category_list %}
+						<ul class="category-menu">
+							{% for category in category_list%}
+							<li><a href="{% url 'blog:category' category.pk %}">{{ category.name }}</a></li>
+							{% empty %}
+							<p>There is no category yet.</p>
+							{% endfor %}
+						</ul>
+						<!-- recent-article -->
+						<div class="blog-sidebar">
+							{% get_recent_article as recent_article_list %}
+							<h4>Recent Posts</h4>
+							{% for article in recent_article_list %}
+							<article class="blog-post-sidebar">
+								<div class="img">
+									<img src="{% static 'img/img5.jpg' %}" alt="">
+								</div>
+								<a href="{% url 'blog:detail' article.pk %}">
+									<h6>{{ article.title }}</h6>
+								</a>
+								<p>{{ article.summary }}</p>
+								<a href="{% url 'blog:detail' article.pk %}" class="read-more">Read more</a>
+							</article>
+							{% endfor %}
+						</div>
+						<!-- tags -->
+						<div class="tags">
+							<h4>Tags</h4>
+							<a href="#" class="active">3D</a>
+							<a href="#">Bussiness</a>
+							<a href="#">News</a>
+							<a href="#">Gaming</a>
+							<a href="#">World</a>
+							<a href="#">Article</a>
+							<a href="#">Tehnology</a>
+							<a href="#">Corporate</a>
+							<a href="#">Bussiness</a>
+							<a href="#">News</a>
+							<a href="#">Gaming</a>
+							<a href="#">World</a>
+							<a href="#">Article</a>
+							<a href="#">Tehnology</a>
+							<a href="#">Corporate</a>
+						</div>
+						<!-- Tags -->
+					</aside>
+					<!-- blog-sidebar end-->
+
+					<!-- blog-article-list -->
+					<div class="content col-md-8">
+                        {% block article %}
+                        {% endblock article %}
+					</div>
+					<!-- blog-article-list end-->
+				</div>
+			</div>
+		</section>
+{% endblock body %}	
