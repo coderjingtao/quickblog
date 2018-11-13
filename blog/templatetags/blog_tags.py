@@ -1,5 +1,6 @@
 from django import template
-from ..models import Article, Category
+from ..models import Article, Category, Tag
+from django.db.models.aggregates import Count
 
 register = template.Library()
 
@@ -10,4 +11,11 @@ def get_recent_article(num=3):
 
 @register.simple_tag
 def get_categories():
-    return Category.objects.all()
+    #return Category.objects.all()
+    # for count the total number of articles under each category
+    return Category.objects.annotate(num_articles = Count('article')).filter(num_articles__gt=0)
+
+@register.simple_tag
+def get_tags():
+    return Tag.objects.annotate(num_articles = Count('article')).filter(num_articles__gt=0)
+

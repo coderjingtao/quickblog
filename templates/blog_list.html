@@ -15,6 +15,7 @@
 			<p>{{ article.summary }}</p>
 			<div class="bottom-blog clear">
 				<div class="date">Date publication: {{ article.created_time }}</div>
+				<div class="date">&nbsp;&nbsp;Views: {{ article.views }}</div>
 				<a href="{% url 'blog:detail' article.pk %}" class="read-more">Read more</a>
 				<a href="{% url 'blog:detail' article.pk %}#comment-area" class="comment"><i class="fa fa-comment-o" aria-hidden="true"></i> {{ article.comment_set.count }} comments</a>
 			</div>
@@ -23,12 +24,33 @@
 	{% empty %}
 		<div class="no-post">There is no article.</div>
 	{% endfor %}
+
+	{% if is_paginated %}
 	<ul class="pager">
-		<li><a href="#" class="active">1</a></li>
-		<li><a href="#">2</a></li>
-		<li><a href="#">3</a></li>
-		<li><a href="#">4</a></li>
-		<li><a href="#">5</a></li>
+		{% if first %}
+			<li><a href="?page=1">1</a></li>
+		{% endif %}
+		{% if left %}
+			{% if left_has_more %}
+				<span>...</span>
+			{% endif %}
+			{% for i in left %}
+				<li><a href="?page={{ i }}">{{ i }}</a></li>
+			{% endfor %}
+		{% endif %}
+		<li><a href="?page={{ page_obj.number }}" class="active">{{ page_obj.number }}</a></li>
+		{% if right %}
+			{% for i in right %}
+				<li><a href="?page={{ i }}">{{ i }}</a></li>
+			{% endfor %}
+			{% if right_has_more %}
+				<span>...</span>
+			{% endif %}
+		{% endif %}
+		{% if last %}
+			<li><a href="?page={{ paginator.num_pages }}">{{ paginator.num_pages }}</a></li>
+		{% endif %}
 	</ul>
+	{% endif %}
 	
 {% endblock article %}					

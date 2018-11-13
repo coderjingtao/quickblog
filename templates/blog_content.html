@@ -6,14 +6,20 @@
 	<style>
 	</style>
 	<article class="blog-item">
+		<div class="tags">
+			{% for tag in article.tags.all %}
+			<a href="{% url 'blog:tag' tag.pk %}" class="active">{{ tag }}</a>
+			{% endfor %}
+		</div>
 		<div class="img">
 			<img src="{% static 'img/img16.jpg' %}" alt="">
 		</div>
 		<!--div class="blog-text"-->
-		<div>
+		<div class="blog-text">
 			<p>{{ article.body | safe }}</p>
 			<div class="bottom-blog clear">
 				<div class="date">Date publication: {{ article.created_time }}</div>
+				<div class="date">&nbsp;&nbsp;Views: {{ article.views }}</div>
 				<a href="{% url 'blog:detail' article.pk %}#comment-area" class="comment"><i class="fa fa-comment-o" aria-hidden="true"></i> {{ article.comment_set.count }} comments</a>
 			</div>
 		</div>

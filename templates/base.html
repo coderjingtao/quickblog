@@ -21,7 +21,7 @@
 		<!-- header -->
 		<div id="page-preloader"><span class="spinner"></span></div>
 		<header id="header" class="clear">
-			<a href="/about" class="logo">Jingtao</a>
+			<a href="{% url 'index' %}" class="logo">Jingtao</a>
 			<div class="header-right">
 				<div class="header-search">
 					<i class="fa fa-search" aria-hidden="true"></i>
@@ -39,7 +39,7 @@
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav menu">
 						<li class="dropdown"><a href="{% url 'blog:index' %}">Blog</a></li>
-						<li><a href="/about">About Me</a></li>
+						<li><a href="{% url 'about' %}">About Me</a></li>
 					</ul>
 				</div>
 			</nav>

@@ -6,7 +6,7 @@
 		<!-- breadcrumbs-wrapper -->
 		<div class="breadcrumbs-wrapper">
 			<ul class="breadcrumbs">
-				<li><a href="#" class="home"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+				<li><a href="{% url 'index' %}" class="home"><i class="fa fa-home" aria-hidden="true"></i></a></li>
 				<li><a href="{% url 'blog:index' %}">Blog</a></li>
 			</ul>
 		</div>
@@ -24,7 +24,7 @@
 						{% get_categories as category_list %}
 						<ul class="category-menu">
 							{% for category in category_list%}
-							<li><a href="{% url 'blog:category' category.pk %}">{{ category.name }}</a></li>
+							<li><a href="{% url 'blog:category' category.pk %}">{{ category.name }}&nbsp;&nbsp;&nbsp;({{ category.num_articles }})</a></li>
 							{% empty %}
 							<p>There is no category yet.</p>
 							{% endfor %}
@@ -49,23 +49,27 @@
 						<!-- tags -->
 						<div class="tags">
 							<h4>Tags</h4>
-							<a href="#" class="active">3D</a>
-							<a href="#">Bussiness</a>
-							<a href="#">News</a>
-							<a href="#">Gaming</a>
-							<a href="#">World</a>
-							<a href="#">Article</a>
-							<a href="#">Tehnology</a>
-							<a href="#">Corporate</a>
-							<a href="#">Bussiness</a>
-							<a href="#">News</a>
-							<a href="#">Gaming</a>
-							<a href="#">World</a>
-							<a href="#">Article</a>
-							<a href="#">Tehnology</a>
-							<a href="#">Corporate</a>
+							{% get_tags as tag_list %}
+								{% for tag in tag_list %}
+									<a href="{% url 'blog:tag' tag.pk %}" class="active">{{ tag }}</a>
+								{% empty %}
+									<span>There is no tag</span>
+								{% endfor %}
 						</div>
 						<!-- Tags -->
+						<!-- RSS -->
+						<div class="blog-sidebar">
+							<a href="{% url 'rss' %}"><h4>RSS Subscription</h4></a>
+						</div>
+						<!-- RSS -->
+						<!-- Contents -->
+						<!--
+						<div class="blog-sidebar">
+							<h4>Contents</h4>
+							{{ article.toc | safe }}
+						</div>
+						-->
+						<!-- Contents -->
 					</aside>
 					<!-- blog-sidebar end-->
 

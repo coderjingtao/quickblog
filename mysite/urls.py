@@ -15,13 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from blog.views import article_list
+from blog.views import ArticleListView
+from blog.feeds import ArticlesRssFeed
 from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('blog/',include('blog.urls')),
     path('comment/',include('comments.urls')),
-    path('',article_list),
-    path('about/',views.aboutme),
+    path('',ArticleListView.as_view(),name='index'),
+    path('rss/',ArticlesRssFeed(),name='rss'),
+    path('about/',views.aboutme,name='about'),
 ]

@@ -829,7 +829,7 @@ ul.tabs li.active, ul.tabs li:hover{
 }
 .blog-text{
 	background:#fff;
-	padding: 35px;
+    padding: 35px;
 }
 .blog-text a{
 	text-decoration:none;
